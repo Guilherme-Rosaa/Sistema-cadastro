@@ -1,0 +1,242 @@
+<html lang="pt-br">
+
+<head>
+  <link rel='stylesheet' type='text/css' href='../css/style.css'>
+</head>
+
+<body>
+  <div class="center-usuarios">
+    <div class="custom-card-usuarios">
+      <h1>Cadastro de Entidades</h1>
+      <br>
+      <table>
+        <tr>
+          <td>
+            <table>
+              <tr>
+                <td>
+                  <div class="input-container">
+                    <input id="codigo" class="texto" type="text" pattern=".+" required />
+                    <label for="codigo" class="txt">Código</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="nome" class="texto" type="text" pattern=".+" required />
+                    <label for="nome" class="txt">Nome</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="cpf" class="texto" type="text" pattern=".+" required />
+                    <label for="cpf" class="txt">CPF/CNPJ</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="grupo" class="texto" type="text" pattern=".+" required />
+                    <label for="grupo" class="txt">Grupo</label>
+                  </div>
+                </td>
+              </tr>
+              <!-- <tr>
+                <td>
+                  <div class="input-container">
+                    <input id="grupo" class="texto" type="text" pattern=".+" required />
+                    <label for="grupo" class="txt">Grupo</label>
+                  </div>
+                </td>
+              </tr> -->
+              <tr>
+                <td>
+                  <div class="input-container">
+                    <input id="logradouro" class="texto" type="text" pattern=".+" required />
+                    <label for="logradouro" class="txt">Logradouro</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="numero" class="texto" type="text" pattern=".+" required />
+                    <label for="numero" class="txt">Número</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="cep" class="texto" type="text" pattern=".+" required />
+                    <label for="cep" class="txt">CEP</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="input-container">
+                    <input id="bairro" class="texto" type="text" pattern=".+" required />
+                    <label for="bairro" class="txt">Bairro</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="complemento" class="texto" type="text" pattern=".+" required />
+                    <label for="complemento" class="txt">Complemento</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="input-container">
+                    <input id="municipio" class="texto" type="text" pattern=".+" required />
+                    <label for="municipio" class="txt">Município</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="estado" class="texto" type="text" pattern=".+" required />
+                    <label for="estado" class="txt">Estado</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="pais" class="texto" type="text" pattern=".+" required />
+                    <label for="pais" class="txt">País</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="input-container">
+                    <input id="tel" class="texto" type="text" pattern=".+" required />
+                    <label for="tel" class="txt">Telefone</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="cel" class="texto" type="text" pattern=".+" required />
+                    <label for="cel" class="txt">Celular</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="input-container">
+                    <input id="mail" class="texto" type="text" pattern=".+" required />
+                    <label for="mail" class="txt">E-mail</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-container">
+                    <input id="dataC" class="texto" type="text" pattern=".+" required />
+                    <label for="dataC" class=" txt">Data de Cadastro</label>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+      </table>
+      <br>
+      <div class="btnCenter">
+        <button onclick="btnsave()" class="botao">Salvar</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button onclick="location.href='entidades_list.html'" class="botao"><label>Voltar</label></button>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+  var index;
+  window.onload = function () {
+    index = window.location.search.substr(7);
+
+    if (index) {
+      var data = JSON.parse(localStorage.getItem("data-entidades"));
+      var entidades = data[index];
+
+      document.getElementById('codigo').value = entidades.codigo;
+      document.getElementById('cpf').value = entidades.cpf;
+      document.getElementById('nome').value = entidades.nome;
+      document.getElementById('grupo').value = entidades.grupo;
+      document.getElementById('logradouro').value = entidades.logradouro;
+      document.getElementById('numero').value = entidades.numero;
+      document.getElementById('cep').value = entidades.cep;
+      document.getElementById('bairro').value = entidades.bairro;
+      document.getElementById('complemento').value = entidades.complemento;
+      document.getElementById('municipio').value = entidades.municipio;
+      document.getElementById('estado').value = entidades.estado;
+      document.getElementById('pais').value = entidades.pais;
+      document.getElementById('tel').value = entidades.tel;
+      document.getElementById('cel').value = entidades.cel;
+      document.getElementById('mail').value = entidades.mail;
+      document.getElementById('dataC').value = entidades.dataC;
+    }
+  }
+
+  function btnsave() {
+    var data = JSON.parse(localStorage.getItem("data-entidades"));
+    if (!data) data = [];
+
+    if (index) {
+      var registro = criarRegistro();
+      data.splice(index, 1, registro);
+      localStorage.setItem("data-entidades", JSON.stringify(data));
+      window.location.href = "entidades_list.html";
+    } else {
+      var nome = document.getElementById('nome').value;
+      for (var i in data) {
+        if (data[i].nome == nome) {
+          alert('Já existe um registro com esse nome, por favor escolha outro e tente novamente!');
+          return;
+        }
+      }
+      var registro = criarRegistro();
+      data.push(registro);
+      localStorage.setItem("data-entidades", JSON.stringify(data));
+      window.location.href = "entidades_list.html";
+    }
+  }
+
+  function criarRegistro() {
+    var codigo = document.getElementById('codigo').value;
+    var cpf = document.getElementById('cpf').value;
+    var nome = document.getElementById('nome').value;
+    var grupo = document.getElementById('grupo').value;
+    var logradouro = document.getElementById('logradouro').value;
+    var numero = document.getElementById('numero').value;
+    var cep = document.getElementById('cep').value;
+    var bairro = document.getElementById('bairro').value;
+    var complemento = document.getElementById('complemento').value;
+    var municipio = document.getElementById('municipio').value;
+    var estado = document.getElementById('estado').value;
+    var pais = document.getElementById('pais').value;
+    var tel = document.getElementById('tel').value;
+    var cel = document.getElementById('cel').value;
+    var mail = document.getElementById('mail').value;
+    var dataC = document.getElementById('dataC').value;
+
+    var registro = {
+      "codigo": codigo,
+      "cpf": cpf,
+      "nome": nome,
+      "grupo": grupo,
+      "logradouro": logradouro,
+      "numero": numero,
+      "cep": cep,
+      "bairro": bairro,
+      "complemento": complemento,
+      "municipio": municipio,
+      "estado": estado,
+      "pais": pais,
+      "tel": tel,
+      "cel": cel,
+      "mail": mail,
+      "dataC": dataC
+    }
+    return registro
+  }
+</script>
+
+</html>

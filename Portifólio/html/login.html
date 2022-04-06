@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <link rel='stylesheet' type='text/css' href='../css/style.css'>
+</head>
+
+<body>
+  <div class="center-login">
+    <div class="custom-login">
+      <table>
+        <tr>
+          <td colspan="2">
+            <h1>Tio GUI's</h1>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="input-container">
+              <input id="usuario" class="texto" type="text" pattern=".+" required />
+              <label for="usuario" class= "txt">Usuário</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="input-container">
+              <input id="senha" class="texto" type="text" pattern=".+" required />
+              <label for="senha" class= "txt">Senha</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div>
+              <button onclick="location.href='menu.html'" class="custom-buttons-login">Login</button><br><Br>
+              <button onclick="location.href='cadastro.html'" class="custom-buttons-login">Cadastrar-se</button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+
+<script>
+  function filtrar() {
+    var data = JSON.parse(window.localStorage.getItem('data-login'));
+
+    if (!data) {
+      alert('Nenhum registro encontrado!');
+      return;
+    }
+
+    var filtroNome = document.getElementById("filtroNome").value;
+    var filtroEmail = document.getElementById("filtroEmail").value;
+    var filtroTelefone = document.getElementById("filtroTelefone").value;
+    var filtroCelular = document.getElementById("filtroCelular").value;
+    var filteredData = [];
+
+    for (var i = 0; i < data.length; i++) {
+      if (!filtroNome || data[i].nome.toUpperCase().startsWith(filtroNome.toUpperCase())) {
+        if (!filtroEmail || data[i].email.toUpperCase().startsWith(filtroEmail.toUpperCase())) {
+          if (!filtroTelefone || filtroTelefone == data[i].telefone) {
+            if (!filtroCelular || filtroCelular == data[i].celular) {
+              filteredData.push(data[i]);
+            }
+          }
+        }
+      }
+    }
+
+    if (filteredData.length == 0) {
+      alert('Nenhum registro encontrado a partir do filtro selecionado!');
+      return;
+    }
+
+  }
+</script>
+
+</html>

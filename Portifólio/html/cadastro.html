@@ -1,0 +1,109 @@
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' type='text/css' href='../css/style.css'>
+</head>
+
+<body>
+  <div>
+    <table class="custom-card-register">
+      <tr>
+        <td><label>Nome</label></td>
+        <td colspan="2"><input type="text" id="nome" class="custom-input"></input></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td colspan="2"><input type="email" id="email" class="custom-input"></input></td>
+      </tr>
+      <tr>
+        <td>Telefone</td>
+        <td colspan="2"><input type="tel" id="tel" class="custom-input"></input></td>
+      </tr>
+      <tr>
+        <td>Usuário</td>
+        <td colspan="2"><input type="text" id="usuario" class="custom-input"></input></td>
+      </tr>
+      <tr>
+        <td>Senha</td>
+        <td colspan="2"><input type="password" id="senha" class="custom-input"></input></td>
+      </tr>
+      <tr>
+        <td>Repetir senha</td>
+        <td colspan="2"><input type="password" id="confirmacao" class="custom-input"></input></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox">Adm</input></td>
+        <td>Sexo
+          <select class="custom-option">
+            <option>Masculino</option>
+            <option>Feminino</option>
+            <option>Outros</option>
+          </select>
+        </td>
+        <td>
+          <label>Tipo de inscrição</label>
+          <input type="radio">CPF</input>
+          <input type="radio">CNPJ</input>
+        </td>
+      <tr>
+        <td><label>Inscrição</label></td>
+        <td colspan="2"><input type="text" class="custom-input"></input></td>
+      </tr>
+    </table>
+    <div class="btnCenter">
+      <button onclick='salvar()'><label>Salvar</label></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button onclick="location.href='login.html'"><label>Voltar</label></button>
+    </div>
+  </div>
+</body>
+
+<script>
+  function salvar() {
+    var data = JSON.parse(localStorage.getItem("data-login"));
+    if (!data) data = [];
+
+    var usuario = document.getElementById('usuario').value;
+    var senha = document.getElementById('senha').value;
+    var confirmacao = document.getElementById('confirmacao').value;
+
+    if (senha !== confirmacao) {
+      alert('Suas senhas são incompatíveis');
+      document.getElementById('senha').value = '';
+      document.getElementById('confirmacao').value = '';
+      return;
+    } else {
+      for (var i in data) {
+        if (data[i].usuario == usuario) {
+          alert('Já existe um registro com esse nome de usuário');
+          return;
+        }
+      }
+      var registro = criarRegistro();
+      data.push(registro);
+      localStorage.setItem("data-login", JSON.stringify(data));
+      //window.location.href = "login.html";
+    }
+  }
+
+
+  function criarRegistro() {
+    var nome = document.getElementById('nome').value;
+    var usuario = document.getElementById('usuario').value;
+    var tel = document.getElementById('tel').value;
+    var email = document.getElementById('email').value;
+    var senha = document.getElementById('senha').value;
+    var confirmacao = document.getElementById('confirmacao').value;
+    var registro = {
+      "nome": nome,
+      "usuario": usuario,
+      "tel": tel,
+      "email": email,
+      "senha": senha,
+      "confirmacao": confirmacao
+    }
+    return registro;
+  }
+</script>
+
+</html>

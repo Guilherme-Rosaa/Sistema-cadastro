@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <link rel='stylesheet' type='text/css' href='../css/style.css'>
+</head>
+
+<body>
+  <h1>Lista de Entidades</h1>
+
+  <div class="custom-card-filter">
+    <table class="custom-table-filter">
+      <tr>
+        <td>
+          <div class="input-container">
+            <input id="filtroCodigo" class="texto" type="number" pattern=".+" required />
+            <label for="filtroCodigo" class="txt">Código</label>
+          </div>
+        </td>
+        <td>
+          <div class="input-container">
+            <input id="filtroCpf" class="texto" type="number" pattern=".+" required />
+            <label for="filtroCpf" class="txt">CPF/CNPJ</label>
+          </div>
+        </td>
+        <td>
+          <div class="input-container">
+            <input id="filtroNome" class="texto" type="text" pattern=".+" required />
+            <label for="filtroNome" class="txt">Nome</label>
+          </div>
+        </td>
+        <td>
+          <div class="input-container">
+            <input id="filtroGrupo" class="texto" type="text" pattern=".+" required />
+            <label for="filtroGrupo" class="txt">Grupo</label>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="custom-buttons-filtro">
+      <button onclick="location.href='entidades.html'"><label>Incluir</label></button>
+      <button onclick="filtrar()">Filtrar</button>
+      <button onclick="limparFiltro(true)">Limpar Filtro</button>
+      <button onclick="location.href='menu.html'"><label>Voltar</label></button>
+    </div>
+  </div>
+  <br>
+
+  <div class="custom-card-data">
+    <table class="custom-table-data" cellpadding=10 id="tblEntidades">
+      <thead class="custom-thead-data">
+        <tr>
+          <td>Código</td>
+          <td>CPF/CNPJ</td>
+          <td>Nome</td>
+          <td>Grupo</td>
+          <td>Ações</td>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+<script>
+  window.onload = listar();
+
+  function listar() {
+    limparTabela();
+    var table = document.getElementById("tblEntidades");
+    var data = JSON.parse(window.localStorage.getItem('data-entidades'));
+
+    if (data) {
+      for (var i = 0; i < data.length; i++) {
+        var novaLinha = table.insertRow(1);
+        inserirCelula(novaLinha, 0, data[i].codigo);
+        inserirCelula(novaLinha, 1, data[i].cpf);
+        inserirCelula(novaLinha, 2, data[i].nome);
+        inserirCelula(novaLinha, 3, data[i].grupo);
+        inserirCelula(novaLinha, 4, '<a href="#" onClick="editar(' + i + ');" title="Editar"><img src="https://img.icons8.com/small/15/000000/edit.png"/></a> &nbsp; <a href="#" onClick="excluir(' + i + ');" title="Excluir"><img src="https://img.icons8.com/small/15/000000/delete-sign.png"/></a>');
+      }
+    }
+  }
+
+  function inserirCelula(linha, num, valor) {
+    var novaCelula = linha.insertCell(num);
+    novaCelula.innerHTML = valor;
+  }
+
+  function filtrar() {
+    limparTabela();
+    var table = document.getElementById("tblEntidades");
+    var data = JSON.parse(window.localStorage.getItem('data-entidades'));
+
+    if (!data) {
+      alert('Nenhum registro encontrado!');
+      return;
+    }
+
+    var filtroCodigo = document.getElementById("filtroCodigo").value;
+    var filtroCpf = document.getElementById("filtroCpf").value;
+    var filtroNome = document.getElementById("filtroNome").value;
+    var filtroGrupo = document.getElementById("filtroGrupo").value;
+    var filteredData = [];
+
+    for (var i = 0; i < data.length; i++) {
+      if (!filtroCodigo || filtroCodigo == data[i].codigo) {
+        if (!filtroCpf || filtroCpf == data[i].cpf) {
+          if (!filtroNome || data[i].nome.toUpperCase().startsWith(filtroNome.toUpperCase())) {
+            if (!filtroGrupo || filtroGrupo == data[i].grupo) {
+              filteredData.push(data[i]);
+            }
+          }
+        }
+      }
+    }
+
+    if (filteredData.length == 0) {
+      alert('Nenhum registro encontrado a partir do filtro selecionado!');
+      return;
+    }
+
+    for (var i = 0; i < filteredData.length; i++) {
+      var novaLinha = table.insertRow(1);
+      inserirCelula(novaLinha, 0, filteredData[i].codigo);
+      inserirCelula(novaLinha, 1, filteredData[i].cpf);
+      inserirCelula(novaLinha, 2, filteredData[i].nome);
+      inserirCelula(novaLinha, 3, filteredData[i].grupo);
+      inserirCelula(novaLinha, 4, '<a href="#" onClick="editar(' + i + ');" title="Editar/' + i + '"><img src="https://img.icons8.com/small/15/000000/edit.png"/></a> &nbsp; <a href="#" onClick="excluir(' + i + ');" title="Excluir/' + i + '"><img src="https://img.icons8.com/small/15/000000/delete-sign.png"/></a>');
+    }
+  }
+
+  function editar(index) {
+    window.location.href = "entidades.html?index=" + index;
+  }
+
+  function excluir(index) {
+    var certeza = confirm('Deseja mesmo excluir esta entidade ?');
+
+    if (certeza) {
+      var data = JSON.parse(window.localStorage.getItem('data-entidades'));
+      data.splice(index, 1);
+      localStorage.setItem("data-entidades", JSON.stringify(data));
+      listar();
+    } else {
+      return
+    }
+  }
+
+  function limparTabela() {
+    var table = document.getElementById("tblEntidades");
+
+    for (var i = table.rows.length - 1; i > 0; i--) {
+      table.deleteRow(i);
+    }
+  }
+
+  function limparFiltro() {
+    document.getElementById('filtroCodigo').value = '';
+    document.getElementById('filtroCpf').value = '';
+    document.getElementById('filtroNome').value = '';
+    document.getElementById('filtroGrupo').value = '';
+    limparTabela();
+    listar();
+  }
+
+</script>
+
+</html>
